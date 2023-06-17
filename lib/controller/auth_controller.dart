@@ -92,11 +92,12 @@ class AuthController extends GetxController {
         PhoneAuthProvider.credential(verificationId: verId, smsCode: otpNumber);
 
     log("LogedIn");
-    Get.to(() => ProfileSettingScreen(phoneNumber));
 
     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
       //decideRoute();
+      Get.to(() => ProfileSettingScreen(phoneNumber));
     }).catchError((e) {
+      Get.to(() => RegisterScreen("invalid otp code"));
       print("Error while sign In $e");
     });
 
